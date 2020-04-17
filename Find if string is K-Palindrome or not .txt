@@ -1,0 +1,51 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     String[] s=br.readLine().split("\\s");
+	     int n=Integer.parseInt(s[0]);
+	     int k=Integer.parseInt(s[1]);
+	     String s1=br.readLine();
+	     char[] c=s1.toCharArray();
+	     int[][] dp=new int[c.length][c.length];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     int ans=c.length-kpalindrome(c,0,c.length-1,dp);
+	     if(ans<=k)
+	     {
+	         sb.append(1+"\n");
+	     }
+	     else{
+	         sb.append(0+"\n");
+	     }
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int kpalindrome(char[] c,int i,int j,int[][] dp)
+	 {
+	     if(j==-1 || i==c.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][j]!=-1)
+	     {
+	         return dp[i][j];
+	     }
+	     if(c[i]==c[j])
+	     {
+	         return dp[i][j]=1+kpalindrome(c,i+1,j-1,dp);
+	     }
+	     return dp[i][j]=Math.max(kpalindrome(c,i+1,j,dp),kpalindrome(c,i,j-1,dp));
+	 }
+}

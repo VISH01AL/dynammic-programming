@@ -1,0 +1,50 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[][][] dp=new int[2][arr.length+1][arr.length+1];
+	     sb.append(minmax(arr,1,0,n-1,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int minmax(int[] arr,int myturn,int left,int right,int[][][] dp)
+	 {
+	    
+	     if(left<=right)
+	     {
+	         if(dp[myturn][left][right]!=0)
+	         {
+	             return dp[myturn][left][right];
+	         }
+	     if(myturn==1)
+	     {
+	         int leftsel=arr[left]+minmax(arr,0,left+1,right,dp);
+	         int rightsel=arr[right]+minmax(arr,0,left,right-1,dp);
+	         return dp[myturn][left][right]=Math.max(leftsel,rightsel);
+	     }
+	     else{
+	         int leftsel=minmax(arr,1,left+1,right,dp);
+	         int rightsel=minmax(arr,1,left,right-1,dp);
+	         return dp[myturn][left][right]=Math.min(leftsel,rightsel);
+	     }
+	     }
+	     return 0;
+	 }
+	 
+}

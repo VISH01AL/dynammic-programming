@@ -1,0 +1,21 @@
+class GfG
+{
+    int max_Books(int a[], int n, int k)
+    {
+          int ret=0;
+          int localmax=0;
+          for(int i=0;i<a.length;i++)
+          {
+              if(a[i]<=k)
+              {
+                  localmax+=a[i];
+              }
+              else{
+                ret=Math.max(localmax,ret);
+                localmax=0;
+              }
+          }
+          ret=Math.max(localmax,ret);
+          return ret;
+    }
+}

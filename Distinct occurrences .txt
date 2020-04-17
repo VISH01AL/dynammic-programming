@@ -1,0 +1,36 @@
+class GfG
+{
+    int  subsequenceCount(String S, String T)
+    {
+        int m=S.length();
+        int n=T.length();
+        int[][] dp=new int[m][n];
+        for(int []x:dp)
+        {
+            Arrays.fill(x,-1);
+        }
+		return subcount(S.toCharArray(),T.toCharArray(),m-1,n-1,dp);
+    }
+    int subcount(char[] c1,char[] c2,int i,int j,int[][] dp)
+    {
+        if(j==-1)
+        {
+            return 1;
+        }
+        if(i<0)
+        {
+            return 0;
+        }
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        int smalloutput1=0,smalloutput2=0;
+        if(c1[i]==c2[j])
+        {
+         smalloutput1=subcount(c1,c2,i-1,j-1,dp)%1000000007;
+        }
+        smalloutput2=subcount(c1,c2,i-1,j,dp)%1000000007;
+        return dp[i][j]=(smalloutput1+smalloutput2)%1000000007;
+    }
+}

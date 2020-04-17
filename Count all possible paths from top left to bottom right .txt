@@ -1,0 +1,54 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	    String[] s=br.readLine().split("\\s");
+	    int m=Integer.parseInt(s[0]);
+	    int n=Integer.parseInt(s[1]);
+	    long[][] dp=new long[m][n];
+	    for(int i=0;i<m;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            dp[i][j]=-1;
+	        }
+	    }
+	    sb.append(paths(m-1,n-1,0,0,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static long paths(int m,int n,int posx,int posy,long[][] dp)
+	 {
+	     if(m==posx && n==posy)
+	     {
+	         return 1L;
+	     }
+	     if(dp[posx][posy]!=-1)
+	     {
+	         return dp[posx][posy];
+	     }
+	     long smallans1=0,smallans2=0;
+	     if(canplace(m,n,posx+1,posy))
+	     {
+	         smallans1=paths(m,n,posx+1,posy,dp)%1000000007;
+	     }
+	     if(canplace(m,n,posx,posy+1))
+	     {
+	         smallans2=paths(m,n,posx,posy+1,dp)%1000000007;
+	     }
+	     return dp[posx][posy]=(smallans1+smallans2)%1000000007;
+	 }
+	 public static boolean canplace(int m,int n,int posx,int posy)
+	 {
+	     return  posx<=m && posy<=n;
+	 }
+}

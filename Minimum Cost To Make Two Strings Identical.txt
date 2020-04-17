@@ -1,0 +1,53 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     String[] s=br.readLine().split("\\s");
+	     int costx=Integer.parseInt(s[0]);
+	     int costy=Integer.parseInt(s[1]);
+	     s=br.readLine().split("\\s");
+	     char[] c1=s[0].toCharArray();
+	     char[] c2=s[1].toCharArray();
+	     int len1=s[0].length();
+	     int len2=s[1].length();
+	     int[][] dp=new int[len1][len2];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-2);
+	     }
+	     int ans=mcmte(c1,c2,costx,costy,len1-1,len2-1,dp);
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int mcmte(char[] c1,char[] c2,int costx,int costy,int i,int j,int[][] dp)
+	 {
+	     if(i==-1 && j==-1)
+	     {
+	         return 0;
+	     }
+	     if(i==-1&&j!=-1) return costy*(j+1);
+         if(i!=-1&&j==-1) return costx*(i+1);
+	     if(dp[i][j]!=-2)
+	     {
+	         return dp[i][j];
+	     }
+	     if(c1[i]==c2[j])
+	     {
+	         return dp[i][j]=mcmte(c1,c2,costx,costy,i-1,j-1,dp);
+	     }
+	     int smallans1=mcmte(c1,c2,costx,costy,i-1,j,dp);
+	     int smallans2=mcmte(c1,c2,costx,costy,i,j-1,dp);
+	    
+	   return dp[i][j]=Math.min(costx+smallans1,costy+smallans2);
+	 }
+}

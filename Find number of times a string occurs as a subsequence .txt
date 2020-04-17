@@ -1,0 +1,50 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     String[] s1=br.readLine().split("\\s");
+	     String[] s2=br.readLine().split("\\s");
+	     int m=s2[0].length();
+	     int n=s2[1].length();
+	     int[][] dp=new int[m][n];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     int ans=numofrep(s2[0].toCharArray(),s2[1].toCharArray(),m-1,n-1,dp);
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int numofrep(char[] c1,char[] c2,int i,int j,int[][] dp)
+	 {
+	     if(j==-1)
+	     {
+	         return 1;
+	     }
+	     if(i<0 || j<0)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][j]!=-1)
+	     {
+	         return dp[i][j];
+	     }
+	     int smalloutput1=0,smalloutput2=0;
+	     if(c1[i]==c2[j])
+	     {
+	         smalloutput1=numofrep(c1,c2,i-1,j-1,dp);
+	     }
+	     smalloutput2=numofrep(c1,c2,i-1,j,dp);
+	     return dp[i][j]=smalloutput1+smalloutput2;
+	 }
+}

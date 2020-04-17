@@ -1,0 +1,57 @@
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split(" ");
+	     int change=Integer.parseInt(br.readLine());
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[][] dp=new int[change+1][n];
+	     for(int i=0;i<change+1;i++)
+	     {
+	         for(int j=0;j<n;j++)
+	         {
+	             dp[i][j]=-1;
+	         }
+	     }
+	     sb.append(solve(arr,change,0,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int solve(int[] coins,int amount,int count,int[][] dp)
+	 {
+	     if(amount==0)
+	     {
+	         return 1;
+	     }
+	     if(count==coins.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[amount][count]!=-1)
+	     {
+	         return dp[amount][count];
+	     }
+	     int smallans1=0;
+	     if(amount-coins[count]>=0)
+	     {
+	         smallans1=solve(coins,amount-coins[count],count,dp);
+	     }
+	     int smallans2=solve(coins,amount,count+1,dp);
+	     dp[amount][count]=smallans1+smallans2;
+	     return dp[amount][count];
+	 }
+}

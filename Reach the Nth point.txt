@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+long solve(int n,long* dp)
+{
+    if(n==0)
+    {
+        return 1;
+    }
+    if(n<0)
+    {
+        return 0;
+    }
+    if(dp[n]!=0)
+    {
+        return dp[n];
+    }
+    dp[n]=solve(n-1,dp)+solve(n-2,dp);
+    
+    return dp[n];
+}
+int main() {
+    int T;
+    cin>>T;
+    
+    while(T-->0)
+    {
+	int n;
+	cin>>n;
+	
+	long* dp=new long[n+1];
+	cout<<solve(n,dp)<<endl;
+    }
+	return 0;
+}

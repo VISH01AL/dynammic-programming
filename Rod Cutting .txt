@@ -1,0 +1,52 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[][] dp=new int[n+1][n+1];
+	     for(int[] x:dp)
+	     {
+	     Arrays.fill(x,-1);
+	     }
+	     sb.append(rodcut(arr,0,n,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int rodcut(int[] arr,int i,int rodlen,int[][] dp)
+	 {
+	     if(i==arr.length)
+	     {
+	         return 0;
+	     }
+	     if(rodlen==0)
+	     {
+	         
+	         return 0;
+	     }
+	     if(dp[i][rodlen]!=-1)
+	     {
+	         return dp[i][rodlen];
+	     }
+	     int smalloutput1=0,smalloutput2=0;
+	     if(rodlen-i-1>=0)
+	     {
+	         smalloutput1=arr[i]+rodcut(arr,i,rodlen-i-1,dp);
+	     }
+	     smalloutput2=rodcut(arr,i+1,rodlen,dp);
+	     return dp[i][rodlen]=Math.max(smalloutput1,smalloutput2);
+	 }
+}

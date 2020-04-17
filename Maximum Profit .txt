@@ -1,0 +1,54 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int k=Integer.parseInt(br.readLine());
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	    
+	     int prevbuy=Integer.MAX_VALUE;
+	     
+	     sb.append(maxprofit(arr,k,1,0,prevbuy)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int maxprofit(int[] arr,int nooftran,int buy,int i,int prevbuy)
+	 {
+	     if(i!=arr.length)
+	     {
+	     if(buy==1)
+	     {
+	         int smallans1=maxprofit(arr,nooftran,0,i+1,arr[i]);
+	         int smallans2=maxprofit(arr,nooftran,1,i+1,prevbuy);
+	         return Math.max(smallans1,smallans2);
+	     }
+	     else{
+	         int smallsell1=0;
+	         if(nooftran>0)
+	         {
+	             if(arr[i]>prevbuy)
+	             {
+	             smallsell1=arr[i]-prevbuy+maxprofit(arr,nooftran-1,1,i+1,Integer.MAX_VALUE);
+	             }
+	         }
+	         
+	         int smallsell2=maxprofit(arr,nooftran,0,i+1,prevbuy);
+	         return Math.max(smallsell1,smallsell2);
+	     }
+	     }
+	     return 0;
+	 }
+}

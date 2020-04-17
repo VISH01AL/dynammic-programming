@@ -1,0 +1,43 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     String[] s=br.readLine().split("\\s");
+	     char[] c1=s[0].toCharArray();
+	     char[] c2=s[1].toCharArray();
+	     int[][] dp=new int[c1.length][c2.length];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     sb.append(s[0].length()+s[1].length()-lcs(c1,c2,0,0,dp)+"\n");
+	     
+	 }
+	 System.out.print(sb);
+	 }
+	 
+	 public static int lcs(char[] c1,char[] c2,int i,int j,int[][] dp)
+	 {
+	     if(i>=c1.length || j>=c2.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][j]!=-1)
+	     {
+	         return dp[i][j];
+	     }
+	     if(c1[i]==c2[j])
+	     {
+	         return dp[i][j]=1+lcs(c1,c2,i+1,j+1,dp);
+	     }
+	     return dp[i][j]=Math.max(lcs(c1,c2,i+1,j,dp),lcs(c1,c2,i,j+1,dp));
+	 }
+}

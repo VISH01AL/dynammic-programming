@@ -1,0 +1,54 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s1=br.readLine().split("\\s");
+	     String[] s2=br.readLine().split("\\s");
+	     int[] hi=new int[n];
+	     int[] li=new int[n];
+	     int[][] dp=new int[n+1][2];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     for(int i=0;i<n;i++)
+	     {
+	         hi[i]=Integer.parseInt(s1[i]);
+	         li[i]=Integer.parseInt(s2[i]);
+	     }
+	     sb.append(hl(hi,li,0,0,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int hl(int[] hi,int[] li,int i,int prev,int[][] dp)
+	 {
+	     if(i==hi.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][prev]!=-1)
+	     {
+	         return dp[i][prev];
+	     }
+	     if(prev==1)
+	     {
+	         int smallans1=li[i]+hl(hi,li,i+1,1,dp);
+	         int smallans2=hl(hi,li,i+1,0,dp);
+	         return dp[i][prev]=Math.max(smallans1,smallans2);
+	     }
+	     else{
+	         int smallans1=hi[i]+hl(hi,li,i+1,1,dp);
+	         int smallans3=hl(hi,li,i+1,0,dp);
+	         return dp[i][prev]=Math.max(smallans3,smallans1);
+	     }
+	 }
+}

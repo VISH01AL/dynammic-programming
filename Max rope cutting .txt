@@ -1,0 +1,52 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+    
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     int[] arr=new int[n+1];
+	     for(int i=1;i<=n;i++)
+	     {
+	         arr[i]=i;
+	     }
+	     long[][] dp=new long[n+1][n];
+	     for(long[] x:dp)
+	     {
+	     Arrays.fill(x,-1);
+	     }
+	     long ans=maxropecut(n,n-1,dp);
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static long maxropecut(int n,int k,long[][] dp)
+	 {
+	     if(k==0)
+	     {
+	         return 0l;
+	     }
+	     if(n==0)
+	     {
+	       return 1l;
+	     }
+	     if(n<1)
+	     {
+	         return 0l;
+	     }
+	     if(dp[n][k]!=-1)
+	     {
+	         return dp[n][k];
+	     }
+	     long inc=k*maxropecut(n-k,k,dp);
+	     long exc=maxropecut(n,k-1,dp);
+	     return dp[n][k]=Math.max(inc,exc);
+	 }
+}

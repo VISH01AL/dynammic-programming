@@ -1,0 +1,44 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     long[] dp=new long[n+1];
+	     for(int i=0;i<dp.length;i++)
+	     {
+	         dp[i]=-1;
+	     }
+	     sb.append(express(n,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static long express(int n,long[] dp)
+	 {
+	     if(n==0)
+	     {
+	         return 1;
+	     }
+	     if(n<0)
+	     {
+	         return 0;
+	     }
+	     if(dp[n]!=-1)
+	     {
+	         return dp[n];
+	     }
+	     long ans=0;
+	     ans+=express(n-1,dp)%1000000007;
+	     ans+=express(n-3,dp)%1000000007;
+	     ans+=express(n-4,dp)%1000000007;
+	     return dp[n]=ans%1000000007;
+	 }
+}

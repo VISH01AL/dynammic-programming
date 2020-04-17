@@ -1,0 +1,78 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+    
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	    String[] s=br.readLine().split("\\s");
+	    int m=Integer.parseInt(s[0]);
+	    int n=Integer.parseInt(s[1]);
+	    s=br.readLine().split("\\s");
+	    int[][] arr=new int[m][n];
+	     int[][] dp=new int[m][n];
+	    int count=0,ans=0;
+	    for(int i=0;i<m;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            arr[i][j]=Integer.parseInt(s[count++]);
+	        }
+	    }
+	    for(int[] x:dp)
+	        Arrays.fill(x,-1);
+	    for(int i=0;i<m;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            solve(arr,m,n,i,j,dp);
+	        }
+	    }
+	    for(int i=0;i<m;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            ans=Math.max(dp[i][j],ans);
+	        }
+	    }
+	    sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int solve(int[][] arr,int m,int n,int posx,int posy,int[][] dp)
+	 {
+	  if(dp[posx][posy]!=-1)
+	  {
+	      return dp[posx][posy];
+	  }
+	  if(arr[posx][posy]==1)
+	  {
+	      int temp1,temp2,temp3;
+	      temp1=temp2=temp3=0;
+	      if(isvalid(m,n,posx+1,posy))
+	      {
+	      temp1=solve(arr,m,n,posx+1,posy,dp);
+	      }
+	      if(isvalid(m,n,posx+1,posy+1))
+	      {
+	      temp2=solve(arr,m,n,posx+1,posy+1,dp);
+	      }
+	      if(isvalid(m,n,posx,posy+1))
+	      {
+	      temp3=solve(arr,m,n,posx,posy+1,dp);
+	      }
+	      return dp[posx][posy]=arr[posx][posy]+Math.min(Math.min(temp1,temp2),temp3);
+	  }
+	  return dp[posx][posy]=0;
+	 }
+	 public static boolean isvalid(int m,int n,int posx,int posy)
+	 {
+	     return posx<m && posy<n;
+	 }
+}

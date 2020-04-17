@@ -1,0 +1,39 @@
+import java.util.*;
+import java.io.*;
+public class GFG {
+
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t= Integer.parseInt(br.readLine());
+        while(t-->0){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int V = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
+            int a[] = new int[n];
+            st = new StringTokenizer(br.readLine());
+            for(int i=0;i<n;i++){
+                a[i] = Integer.parseInt(st.nextToken());
+            }
+            int dp[][] = new int[n][V+1];
+            for(int[] l:dp)
+                Arrays.fill(l,-1);
+            int res = m(a,dp,V,n-1,0);
+            if(res==2147483646)
+                System.out.println(-1);
+            else
+                System.out.println(res);
+        }
+
+    }
+
+    private static int m(int[] a, int[][] dp, int v, int i,int c) {
+        if(v==0)
+            return 0;
+        if(i<0 || v<0)
+            return Integer.MAX_VALUE-1;
+        if(dp[i][v]!=-1)
+            return dp[i][v];
+        dp[i][v] =  Math.min(1+m(a,dp,v-a[i],i,c+1),m(a,dp,v,i-1,c));
+        return dp[i][v];
+    }
+}

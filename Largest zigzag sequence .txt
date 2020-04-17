@@ -1,0 +1,56 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().trim().split("\\s");
+	     int count=0;
+	     int[][] arr=new int[n][n];
+	     for(int i=0;i<n;i++)
+	     {
+	         for(int j=0;j<n;j++)
+	         {
+	             arr[i][j]=Integer.parseInt(s[count++]);
+	         }
+	     }
+	     int[][] dp=new int[n][n+1];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     int ans=zigzagsum(arr,0,arr.length,dp);
+	     
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int zigzagsum(int[][] arr,int row,int prev,int[][] dp)
+	 {
+	     if(row==arr.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[row][prev]!=-1)
+	     {
+	         return dp[row][prev];
+	     }
+	     int ret=0;
+	     for(int i=0;i<arr.length;i++)
+	     {
+	         if(prev!=i)
+	         {
+                ret=Math.max(ret,arr[row][i]+zigzagsum(arr,row+1,i,dp));
+	         }
+	     }
+	     return dp[row][prev]=ret;
+	 }
+}

@@ -1,0 +1,50 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int sum=Integer.parseInt(br.readLine());
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[][] dp=new int[arr.length+1][sum+1];
+	    
+	     sb.append(perfectsum(arr,0,sum,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int perfectsum(int[] arr,int i,int sum,int[][] dp)
+	 {
+	     
+	     if(sum==0)
+	     {
+	         return 1;
+	     }
+	     if(i==arr.length)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][sum]!=0)
+	     {
+	         return dp[i][sum];
+	     }
+	     int smallans1=0,smallans2=0;
+	     if(sum-arr[i]>=0)
+	     {
+	     smallans1=perfectsum(arr,i+1,sum-arr[i],dp);
+	     }   
+	     smallans2=perfectsum(arr,i+1,sum,dp);
+	     return dp[i][sum]=smallans1+smallans2;
+	 }
+}

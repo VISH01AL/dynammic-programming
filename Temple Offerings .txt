@@ -1,0 +1,59 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+    
+    public static int offeringNumber(int n, int templeHeight[]) 
+   { 
+    int[] chainSize1=new int[n];
+    int[] chainSize2=new int[n];
+    for (int i = 0; i < n; ++i) 
+    { 
+        chainSize1[i] = -1; 
+        chainSize2[i] = -1; 
+    } 
+    chainSize1[0] = 1; 
+    chainSize2[n-1] = 1; 
+    for (int i=1; i<n; ++i) 
+    { 
+        if (templeHeight[i - 1] < templeHeight[i]) 
+            chainSize1[i] = chainSize1[i - 1] + 1; 
+        else
+            chainSize1[i] = 1; 
+    } 
+    for (int i=n-2; i>=0; --i) 
+    { 
+        if (templeHeight[i + 1] < templeHeight[i]) 
+            chainSize2[i] = chainSize2[i + 1] + 1; 
+        else
+            chainSize2[i] = 1; 
+    } 
+  
+  
+    int sum = 0; 
+    for (int i = 0; i < n; ++i) 
+        sum += Math.max(chainSize1[i], chainSize2[i]); 
+    return sum; 
+    } 
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int ans=offeringNumber(n,arr);
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 
+}

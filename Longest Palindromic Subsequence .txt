@@ -1,0 +1,51 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     String s=br.readLine();
+	     int[][] dp=new int[s.length()][s.length()];
+	     
+	     for(int i=0;i<s.length();i++)
+	     {
+	         for(int j=0;j<s.length();j++)
+	         {
+	             dp[i][j]=-1;
+	         }
+	     }
+	     sb.append(lps(s,0,s.length()-1,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	public static int lps(String s,int left,int right,int[][] dp)
+    {
+    if(dp[left][right]!=-1)
+    {
+        return dp[left][right];
+    }
+    if(left==right)
+    {
+        return 1;
+    }
+    if(left<right)
+    {
+        if(s.charAt(left)==s.charAt(right))
+        {
+            dp[left][right]=2+lps(s,left+1,right-1,dp);
+            return dp[left][right];
+        }
+        else{
+            dp[left][right]=Math.max(lps(s,left,right-1,dp),lps(s,left+1,right,dp));
+           return dp[left][right];
+        }
+    }
+    return 0;
+}
+}

@@ -1,0 +1,66 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     if(n==1)
+	     {
+	         sb.append(arr[0]+"\n");
+	         continue;
+	     }
+	     int[][] dp=new int[arr.length][3];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     int ans1=arr[arr.length-1]+maximumprofit(arr,arr.length-2,1,dp);
+	     int ans2=maximumprofit(arr,arr.length-2,0,dp);
+	     sb.append(Math.max(ans1,ans2)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int maximumprofit(int[] arr,int i,int prev,int[][] dp)
+	 {
+	     
+	     if(i<0)
+	     {
+	         return 0;
+	     }
+	     if(dp[i][prev]!=-1)
+	     {
+	         return dp[i][prev];
+	     }
+	     if(i==0)
+	     {
+	         if(prev==0)
+	         {
+	         return arr[0];
+	         }
+	         return 0;
+	     }
+	     int smalloutput1=0,smalloutput2=0;
+	     if(prev==1)
+	     {
+	         return dp[i][prev]=maximumprofit(arr,i-1,0,dp);
+	     }
+	     else{
+	         smalloutput1=arr[i]+maximumprofit(arr,i-1,1,dp);
+	         smalloutput2=maximumprofit(arr,i-1,0,dp);
+	     }
+	     return dp[i][prev]=Math.max(smalloutput1,smalloutput2);
+	 }
+}

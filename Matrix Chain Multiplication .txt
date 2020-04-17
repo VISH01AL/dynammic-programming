@@ -1,0 +1,50 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[][] dp=new int[arr.length][arr.length];
+	     for(int[] x:dp)
+	     {
+	         Arrays.fill(x,-1);
+	     }
+	     sb.append(matrixmul(arr,0,arr.length-1,dp)+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int matrixmul(int[] arr,int i,int j,int[][] dp)
+	 {
+	     if(dp[i][j]!=-1)
+	     {
+	         return dp[i][j];
+	     }
+	     
+	     if(i+1==j)
+	     {
+	         dp[i][j]=0;
+	         return 0;
+	     }
+	     int ret=Integer.MAX_VALUE;
+	     for(int k=i+1;k<j;k++)
+	     {
+	         int tempans=arr[i]*arr[k]*arr[j]+matrixmul(arr,i,k,dp)+matrixmul(arr,k,j,dp);
+	         ret=Math.min(ret,tempans);
+	     }
+	     return dp[i][j]=ret;
+	 }
+}

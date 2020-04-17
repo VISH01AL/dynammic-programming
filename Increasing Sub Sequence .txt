@@ -1,0 +1,60 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	    String s=br.readLine();
+	    char[] sarr=s.toCharArray();
+        int[] dp=new int[s.length()];
+        for(int i=0;i<dp.length;i++)
+        {
+            dp[i]=-1;
+        }
+        int ans=solve(sarr,s.length()-1,dp);
+        for(int i=0;i<dp.length;i++)
+        {
+            if(ans<dp[i])
+            {
+                ans=dp[i];
+            }
+        }
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int solve(char[] sarr,int n,int[] dp)
+	 {
+	     
+	     if(n<0)
+	     {
+	         return 0;
+	     }
+	     if(dp[n]!=-1)
+	     {
+	         return dp[n];
+	     }
+	     int ans=1;
+	     for(int i=0;i<n;i++)
+	     {
+	         if(sarr[i]<sarr[n])
+	         {
+	         int smalloutput=solve(sarr,i,dp)+1;
+	         if(ans<smalloutput)
+	         {
+	             ans=smalloutput;
+	         }
+	         }
+	     }
+	     dp[n]=ans;
+	     solve(sarr,n-1,dp);
+	     
+	     return ans;
+	 }
+}

@@ -1,0 +1,40 @@
+class DynamicProgramming{
+    
+    // function to find number of ways 
+    Long countWays(int m){
+        int[] arr={1,2};
+        long[][] dp=new long[m+1][arr.length];
+        for(int i=0;i<m+1;i++)
+        {
+            for(int j=0;j<arr.length;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
+        return countways(m,arr,0,dp);
+        
+    }
+    Long countways(int m,int[] arr,int i,long[][] dp)
+    {
+        if(m==0)
+        {
+            return 1l;
+        }
+        if(arr.length==i)
+        {
+            return 0l;
+        }
+        if(dp[m][i]!=-1)
+        {
+            return dp[m][i];
+        }
+        long smallans1=0;
+        if(m-arr[i]>=0)
+        {
+            smallans1=countways(m-arr[i],arr,i,dp);
+        }
+        long smallans2=countways(m,arr,i+1,dp);
+        dp[m][i]=smallans1+smallans2;
+        return dp[m][i];
+    }
+}

@@ -1,0 +1,87 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+     public static void print(int[] arr)
+     {
+        for(int x:arr)
+        {
+            System.out.print(x+" ");
+        }
+        System.out.println();
+     }
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     int capacity=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split(" ");
+	     String[] s1=br.readLine().split(" ");
+	     int[] val=new int[n];
+	     int[] w=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         w[i]=Integer.parseInt(s[i]);
+	         val[i]=Integer.parseInt(s1[i]);
+	     }
+	     int[][] dp=new int[capacity+1][n+1];
+	   //System.out.println(knapsack(w,val,capacity,0));
+	   System.out.println(knapsackdp(val,w,capacity,0,dp));
+	  //System.out.println(ks(val,w,n,capacity));
+	 }
+	 }
+	 public static int knapsack(int[] val,int[] wts,int w,int count)
+	 {
+	    
+	    if(count==val.length || w==0)
+	    {
+	        return 0;
+	    }
+	    int inc=0,exc=0;
+	    if(w-wts[count]>=0)
+	    {
+	        inc=val[count]+knapsack(val,wts,w-wts[count],count+1);
+	    }
+	    exc=knapsack(val,wts,w,count+1);
+	    return Math.max(inc,exc);
+	    
+	 }
+	 public static int ks(int[] wts,int[] prices,int n,int w)
+	 {
+	     if(n==0 || w==0)
+	     {
+	         return 0;
+	     }
+	     int include=0,exclude=0;
+	     if(wts[n-1]<=w)
+	     {
+	         include=prices[n-1]+ks(wts,prices,n-1,w-wts[n-1]);
+	     }
+	     exclude=ks(wts,prices,n-1,w);
+	     return Math.max(include,exclude);
+	 }
+	 public static int knapsackdp(int[] wts,int[] prices,int w,int count,int[][] dp)
+	 {
+	     if(count==wts.length || w==0)
+	     {
+	         dp[0][0]=0;
+	         return dp[0][0];
+	     }
+	     if(dp[w][count]!=0)
+	     {
+	         return dp[w][count];
+	     }
+	     int inc=0,exc=0;
+	     if(w-wts[count]>=0)
+	     {
+	         inc=prices[count]+knapsackdp(wts,prices,w-wts[count],count+1,dp);
+	     }
+	     exc=knapsackdp(wts,prices,w,count+1,dp);
+	     return dp[w][count]=Math.max(inc,exc);
+	 }
+}

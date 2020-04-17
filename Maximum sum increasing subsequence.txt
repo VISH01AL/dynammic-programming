@@ -1,0 +1,63 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+    
+	 public static void main (String[] args) throws IOException
+	 {
+	 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 StringBuffer sb=new StringBuffer();
+	 int T=Integer.parseInt(br.readLine());
+	 while(T-->0)
+	 {
+	     int n=Integer.parseInt(br.readLine());
+	     String[] s=br.readLine().split("\\s");
+	     int[] arr=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         arr[i]=Integer.parseInt(s[i]);
+	     }
+	     int[] dp=new int[n];
+	     for(int i=0;i<n;i++)
+	     {
+	         dp[i]=-1;
+	     }
+	     int ans=maxsum(arr,n-1,dp);
+	     for(int i=0;i<n;i++)
+	     {
+	         if(dp[i]>ans)
+	         {
+	             ans=dp[i];
+	         }
+	     }
+	     sb.append(ans+"\n");
+	 }
+	 System.out.print(sb);
+	 }
+	 public static int maxsum(int[] arr,int i,int[] dp)
+	 {
+	     if(i<0)
+	     {
+	         return 0;
+	     }
+	     if(dp[i]!=-1)
+	     {
+	         return dp[i];
+	     }
+	     int ans=arr[i];
+	     for(int k=0;k<i;k++)
+	     {
+	         if(arr[k]<arr[i])
+	         {
+	             int smalloutput=maxsum(arr,k,dp);
+	             if(smalloutput+arr[i]>=ans)
+	             {
+	                 ans=smalloutput+arr[i];
+	             }
+	         }
+	     }
+	     maxsum(arr,i-1,dp);
+	     return dp[i]=ans;
+	 }
+}
